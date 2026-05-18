@@ -146,6 +146,7 @@ class DeForge_AI_Model(nn.Module):
         forensic_dim=256,
         unfreeze_last_blocks=0,
         image_size=256,
+        hf_token=None,
     ):
         super().__init__()
 
@@ -162,7 +163,9 @@ class DeForge_AI_Model(nn.Module):
         self.image_size = image_size
         self.forensic_dim = forensic_dim
 
-        backbone = AutoModel.from_pretrained(model_name, trust_remote_code=True)
+        backbone = AutoModel.from_pretrained(
+            model_name, trust_remote_code=True, token=hf_token
+        )
         backbone.requires_grad_(False)
         self._unfreeze_last_blocks(backbone, unfreeze_last_blocks)
 
